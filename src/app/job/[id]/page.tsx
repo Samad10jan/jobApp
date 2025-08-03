@@ -1,12 +1,18 @@
 import data from "@/app/data"
 import { Avatar, Box, Card, Flex, Text } from "@radix-ui/themes"
+import { notFound } from "next/navigation";
 
-export default function JobPage({ params }) {
-    const id = decodeURIComponent(params.id)
-    const job = data?.data
-    const jobDetail = job.find((job) => {
-        if (job.job_id === id) return true
-    })
+export default async function JobPage({ params }) {
+    
+    const {id} =await params;
+    const res = await fetch("http://localhost:3000/api/job/"+id)
+    const data = await res.json();
+    // console.log(data);
+    
+    if(!data?.success){
+        notFound()
+    }
+    const jobDetail = data.data
     return (
         <div >
 
@@ -20,16 +26,19 @@ export default function JobPage({ params }) {
                     />
                     <Box>
                         <Text as="div" size="6" weight="bold">
-                            {jobDetail?.job_title}
+                            {jobDetail?.title}
                         </Text>
                         <Text as="div" size="2" color="gray">
-                           {jobDetail?.employer_name}
+                           {jobDetail?.employment_type}
+                        </Text>
+                         <Text as="div" size="2" color="gray">
+                           {jobDetail?.salary}
                         </Text>
                         <Text as="div" size="2" color="gray">
-                           {jobDetail?.job_description}
+                           {jobDetail?.job_type}
                         </Text>
                         <Text as="div" size="2" color="gray">
-                           {jobDetail?.job_title}
+                           {jobDetail?.location}
                         </Text>
                     </Box>
                 </Flex>

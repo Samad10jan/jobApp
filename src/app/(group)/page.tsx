@@ -12,7 +12,7 @@ export default async function Home() {
     <main>
       
      
-    <div className="flex flex-wrap justify-center" >
+    <div className="flex flex-wrap justify-center sm:flex " >
       {
         job.map((job,index)=>{
           return(

@@ -2,42 +2,44 @@ import { Avatar, Box, Button, Card, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
 
 export default function JobCard({ item }) {
-    return (
-        <div className="m-[1em]  ">
-
-            <Box maxWidth="30em" className="transition-transform duration-300 ease-in-out hover:scale-115" >
-                <Card className="w-[25em] h-[25em]">
-                    <Flex gap="3" align="center" className="flex flex-col p-4 ">
-                        <Avatar
-                            size="6"
-                            src={item.employer_logo }
-                            radius="full"
-                            fallback={(item.title)[0]}
-                        />
-                        <Text className=" text-center line-clamp-1">{item.job_title}</Text>
-                        <Box>
-                        <Text as="div" size="2" weight="bold">
-
-                            {item.title}
-                        </Text>
-                        </Box>
-                        <Box>
-                            <Text as="div" size="2" color="gray" className="line-clamp-8">
-                                {item.description}
-                            </Text>
-                        </Box>
-                        <Flex justify={"between"} gap={"5px"}>
-                        <Link href={`job/`+ item.job_id}><Button className="m-[1em]">More details - </Button></Link>
-                        <Button className="m-[1em]">Save Job </Button>
-                        </Flex>
-                    </Flex>
-                </Card>
-
+  return (
+    <div className="m-4">
+      <Box className="transition-transform duration-200 ease-in-out hover:scale-110">
+        <Card className="md:w-[25em] w-fit h-auto min-h-[20em]">
+          <Flex gap="3" direction="column" align="center" className="p-4">
+            <Avatar
+              src={item.employer_logo}
+              radius="full"
+              fallback={item.title[0]}
+              className="md:size-24 size-12"
+            />
+            <Box className="text-center">
+              <Text
+                as="div"
+                weight="bold"
+                className="text-sm md:text-lg line-clamp-2"
+              >
+                {item.title}
+              </Text>
             </Box>
-
-
-
-        </div>
-    )
-
+            <Box className="text-center px-2">
+              <Text
+                as="div"
+                color="gray"
+                className="text-xs md:text-base line-clamp-3 md:line-clamp-5"
+              >
+                {item.description}
+              </Text>
+            </Box>
+            <Flex justify="center" gap="4" className="pt-2">
+              <Link href={`job/${item.id}`}>
+                <Button className="text-sm md:text-base">More details</Button>
+              </Link>
+              <Button className="text-sm md:text-base">Save Job</Button>
+            </Flex>
+          </Flex>
+        </Card>
+      </Box>
+    </div>
+  );
 }

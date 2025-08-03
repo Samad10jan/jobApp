@@ -4,7 +4,7 @@ import { Label } from "@radix-ui/themes/components/context-menu";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react"
 
-export default function Login() {
+export default function SignUp() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -14,9 +14,11 @@ export default function Login() {
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault()
+
         setIsDisabled(true)
 
         // client side checks
+
         // const errObj = {};
 
         // if (!(email.trim())) {
@@ -27,20 +29,25 @@ export default function Login() {
         // }
         // setError(errObj)
         // console.log(errObj);
+        const userData ={ email, password }
 
-        // send data and check if in database or not
-        const res = await fetch('http://localhost:3000/api/login', {
+        // send data and check if in database if yes exist user, if no new user create
+        //"/api/signup" on valid due to client side and server side are from same localhost:3000
+        const res = await fetch('/api/signup', {
             method: "POST",
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify(userData)
         })
 
 
-        console.log(res);
+        // console.log(res);
+
         const data = await res.json();
         const user = data.user
-        console.log(user);
-        if(res.status){
-            alert(`${user.role} Logged in`)
+
+        // console.log(user);
+
+        if(data.success){
+            alert(`SignUp`)
             router.push("/")
         }
 
@@ -49,7 +56,7 @@ export default function Login() {
 
     return (
         <main className="flex flex-col justify-center items-center h-screen">
-            <Heading>LOGIN</Heading>
+            <Heading>SignUp</Heading>
             <Card className="w-[26vw] text-2xl h-[30vh] border rounded w-max  h-[250px] m-3">
                 <form onSubmit={handleSubmit} className="*:m-5 *:border *:rounded flex flex-col item-center w-[250px] md:w-[300px]  ">
 

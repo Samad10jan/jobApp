@@ -17,12 +17,13 @@ export async function GET(req:NextRequest){
             title:{
                 contains:q,
                 mode:"insensitive"
-            }
-            ,
+            },
             job_type: jt,
-            employment_type:et
+            employment_type:et,
+            
+        },
+        
 
-        }
     })
     if(!job){
 

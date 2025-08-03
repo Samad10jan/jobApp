@@ -1,4 +1,6 @@
+import { createToken } from "@/services/jwt";
 import prismaClient from "@/services/prisma";
+import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -11,17 +13,27 @@ export async function POST(req: NextRequest) {
     })
     console.log(user);
 
+
+
+
     // user password check and set cookies by our self , not like server "use server"
     if (user.password == body?.password) {
 
+         const userTokenData = {
+            id: user?.id
+        }
         const res = NextResponse.json({
             sucess: true,
             message: "Ok",
-            user
+            user,
+            
         })
-        res.cookies.set("token", user?.email)
+       
+        const token = createToken(userTokenData)
 
-        return res;
+        res.cookies.set("token", token)
+
+        return res
     }
 
     return NextResponse.json({
